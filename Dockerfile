@@ -17,6 +17,6 @@ ADD resources/requirements.txt /home/
 ENV PYTHON_VERSION 3.6
 
 RUN /home/anaconda/bin/conda create --name conda python=$PYTHON_VERSION
-RUN /bin/bash -c "source activate conda && pip install -f /home/requirements.txt"
+RUN /bin/bash -c "source activate conda && pip install -r /home/requirements.txt"
 ADD app.py /home/
 CMD /bin/bash -c "source activate conda" && python /home/app.py
