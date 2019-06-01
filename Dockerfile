@@ -13,10 +13,12 @@ RUN bash /home/anaconda.sh -b -p /home/anaconda
 ENV PATH /home/anaconda/bin:$PATH
 # use `source /home/anaconda/bin/activate` to activete env
 ADD resources/requirements.txt /home/
+ADD resources/environment.yml /home/
 
 ENV PYTHON_VERSION 3.6
 
-RUN /home/anaconda/bin/conda create --name conda python=$PYTHON_VERSION
+RUN /home/anaconda/bin/conda create -f /home/environment.yml
 RUN /bin/bash -c "source activate conda && pip install -r /home/requirements.txt"
+RUN conda install tensorflow-gpu=1.13
 ADD app.py /home/
 CMD /bin/bash -c "source activate conda" && python /home/app.py
